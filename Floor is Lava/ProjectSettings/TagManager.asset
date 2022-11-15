@@ -8,6 +8,7 @@ TagManager:
   - Brown Plane
   - Coin
   - Blue Plane
+  - End
   layers:
   - Default
   - TransparentFX

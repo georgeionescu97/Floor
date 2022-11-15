@@ -18,6 +18,7 @@ public class FloorOscilation : MonoBehaviour
         if(other.gameObject == player)
         {
             player.transform.parent = this.gameObject.transform;
+
         }
     }
 

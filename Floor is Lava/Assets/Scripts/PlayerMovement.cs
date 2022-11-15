@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
@@ -11,15 +10,19 @@ public class PlayerMovement : MonoBehaviour
    public float addingPower = 20;
     bool isJumping;
     bool isInTheAir;
+    bool isFirstCollides;
+    
     public float gravityValue = .5f;
     public GameObject floor;
     [SerializeField] ParticleSystem explosionParticles;
     ShowingScore score;
     public Transform floor3;
+    GameOverCollision collision;
 
 
     void Start()
     {
+        isFirstCollides = false;
         isInTheAir = false;
         rb = GetComponent<Rigidbody>();
         score = GetComponent<ShowingScore>();
@@ -33,15 +36,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "Floor" && isJumping)
-        {
-            isJumping = false;
-            isInTheAir = false;
-            //if(other.gameObject.name == "Floor 3")
-            //{
-            //    rb.enable
-            //}
-        }
+            if (other.gameObject.tag == "Floor" && isJumping)
+            {
+                if (isFirstCollides)
+                {
+                isFirstCollides = false; 
+                isJumping = false;
+                isInTheAir = false;
+                }
+                else
+                {
+                isJumping = false;
+                isInTheAir = false;
+                score.LosingScore();
+                }
+            }
+ 
         if (other.gameObject.tag == "Brown Plane" && isInTheAir)
         {
             isJumping = false;
@@ -61,8 +71,12 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
 
         }
-
     }
+    public bool isFirstCollideswithFloor()
+    {
+        return isFirstCollides = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Coin" && isInTheAir)
@@ -100,6 +114,5 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(horizontal, 0, vertical);
         rb.AddForce(move * addingPower);
     }
-  
 }
 

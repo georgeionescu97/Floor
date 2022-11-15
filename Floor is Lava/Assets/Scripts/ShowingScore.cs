@@ -5,7 +5,7 @@ using TMPro;
 
 public class ShowingScore : MonoBehaviour
 {
-    int _score;
+    public int _score;
     [SerializeField] TextMeshProUGUI scoreText;
 
     void Start()
@@ -19,11 +19,23 @@ public class ShowingScore : MonoBehaviour
 
     public void DisplayScoreBrownSquare()
     {
-        _score += 300;
+        _score += 200;
     }
     public void CoinsCollision()
     {
         _score += 100;
+    }
+    public void LosingScore()
+    {
+        if(_score > 0)
+        {
+            _score -= 50;
+        }
+            
+    }
+    public int Score()
+    {
+        return _score;
     }
    
 }

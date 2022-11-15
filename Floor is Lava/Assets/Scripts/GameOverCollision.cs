@@ -10,11 +10,14 @@ public class GameOverCollision : MonoBehaviour
     public GameObject player;
     [SerializeField] ParticleSystem destroyedParticle;
     DestroyPlayer destroyPlayer;
-
+    PlayerMovement playerMovement;
+    LivesShowing livesShowing;
+    
 
     private void Start()
     {
-        
+        playerMovement = FindObjectOfType<PlayerMovement>();
+        livesShowing = FindObjectOfType<LivesShowing>();
     }
     void Update()
     {
@@ -28,6 +31,10 @@ public class GameOverCollision : MonoBehaviour
         {
             destroyedParticle.Play();
             player.GetComponent<DestroyPlayer>().DestroingPlayer();
+            playerMovement.isFirstCollideswithFloor();
+            livesShowing.LosingLives();
+            
         }
     }
+    
 }
